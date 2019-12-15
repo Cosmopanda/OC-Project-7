@@ -1,1 +1,1 @@
-web: gunicorn grandpy/app:app
+web: gunicorn  --chdir grandpy/ app:app
