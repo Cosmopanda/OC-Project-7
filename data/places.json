@@ -1,0 +1,39 @@
+{
+   "candidates": [
+      {
+         "formatted_address": "7 Cité Paradis, 75010 Paris, France",
+         "geometry": {
+            "location": {
+               "lat": 48.8748465,
+               "lng": 2.3504873
+            },
+            "viewport": {
+               "northeast": {
+                  "lat": 48.87622362989272,
+                  "lng": 2.351843679892722
+               },
+               "southwest": {
+                  "lat": 48.87352397010727,
+                  "lng": 2.349144020107278
+               }
+            }
+         },
+         "name": "OpenClassrooms",
+         "opening_hours": {
+            "open_now": false
+         },
+         "photos": [
+            {
+               "height": 385,
+               "html_attributions": [
+                  "<a href=\"https://maps.google.com/maps/contrib/110718279865691618892\">Openclassrooms</a>"
+               ],
+               "photo_reference": "CmRaAAAA-GpZVdG1T7rdCJvibksbQ_CUpYhRoCE45aaZ4L3pjnEpX8g5DGlMGQqKnV5GXS6zPV_86MmUNCdiHGSBuqKZL365lbSv19HvqOXoxlB2rqTCCwq3NjncrY0_Dzl8iSKSEhD11cJlJzUdZj7C-oQxFFjYGhQEFbmqlsnntzipEq633jt89UoaSQ",
+               "width": 385
+            }
+         ],
+         "rating": 3.3
+      }
+   ],
+   "status": "OK"
+}
