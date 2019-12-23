@@ -10,5 +10,10 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/query/<string:query>", methods=["POST"])
+def query():
+    pass
+
+
 if __name__ == "__main__":
     app.run(threaded=True, debug=True)
