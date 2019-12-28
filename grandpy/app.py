@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 
@@ -12,7 +12,7 @@ def index():
 
 @app.route("/query/<string:query>", methods=["POST"])
 def query():
-    pass
+    return jsonify({})
 
 
 if __name__ == "__main__":

@@ -17,3 +17,9 @@ class WikiAPI:
 
     def __init__(self):
         super(WikiAPI, self).__init__()
+
+    def geo_search(self):
+        pass
+
+    def page_search(self):
+        pass

@@ -8,10 +8,10 @@ class Query:
         super(Query, self).__init__()
         self.query = query
         self.parse()
-        self.query_dict = self.to_dict()
+        self.build()
 
     def parse(self):
         pass
 
-    def to_dict(self):
+    def build(self):
         pass
