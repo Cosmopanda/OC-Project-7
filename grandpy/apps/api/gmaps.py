@@ -26,9 +26,10 @@ class GMapsAPI:
         self.data = {}
 
     def build(self):
-        self.query = re.sub("\\s", "+", self.query)
-        self.query = f"""input={self.query}&inputtype=textquery&fields=photos,
-                         formatted_address,name,rating,opening_hours,geometry"""
+        self.query = (
+            f"input={self.query}&inputtype=textquery&fields=photos,"
+            "formatted_address,name,rating,opening_hours,geometry"
+        )
 
     def place_search(self):
         response = requests.get(f"{GMAPS_URL}{self.query}&key={GMAPS_KEY}")

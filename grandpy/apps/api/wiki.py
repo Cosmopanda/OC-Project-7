@@ -31,13 +31,13 @@ class WikiAPI:
     def build(self, type):
         if isinstance(type, Type.GEO):
             self.geo_query = (
-                f"list=geosearch&gscoord={self.query['latitude']}"
-                f"|{self.query['longitude']}&gsradius=10000&gslimit=10&format=json"
+                f"list=geosearch&gscoord={self.query['latitude']}|"
+                f"{self.query['longitude']}&gsradius=10000&gslimit=10&format=json"
             )
         else:
             self.page_query = (
                 f"pageids={self.query}&prop=extracts&exintro&"
-                f"format=json&prop=info|extracts&inprop=url"
+                "format=json&prop=info|extracts&inprop=url"
             )
 
     def geo_search(self):
