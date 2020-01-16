@@ -3,7 +3,7 @@ import unittest
 from apps.query.query import Query
 
 
-class QueryTestCase(unittest.TextCase):
+class QueryTestCase(unittest.TestCase):
     def setUp(self):
         self.query = Query(
             "Salut GrandPy ! Est-ce que tu connais l'adresse d'OpenClassrooms ?"
