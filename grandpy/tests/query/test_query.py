@@ -10,4 +10,4 @@ class QueryTestCase(unittest.TextCase):
         )
 
     def test_parse(self):
-        self.assertEqual(self.query.query == "connais adresse OpenClassrooms")
+        self.assertEqual(self.query.query == "openclassrooms")
