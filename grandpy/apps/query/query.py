@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+import re
+import json
+from unidecode import unidecode
 
 
 class Query:
@@ -8,10 +11,19 @@ class Query:
         super(Query, self).__init__()
         self.query = query
         self.parse()
-        self.build()
 
     def parse(self):
-        pass
+        # Lowercase
+        self.query = self.query.lower()
 
-    def build(self):
-        pass
+        # Regexep question
+
+        # Clean
+        self.query = unidecode(self.query)
+        self.query = re.sub("(['-])", " ", self.query)
+
+        # Stop words
+        with open("../../stopwords.json") as f:
+            stop_words = json.load(f)["stopwords"]
+            stop_words = "|".join(stop_words)
+            self.query = re.sub(stop_words, "", self.query)
