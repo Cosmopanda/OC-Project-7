@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import json
+import requests
 from enum import Enum
 from settings import WIKI_URL
 
@@ -22,29 +24,52 @@ class Wiki:
 class WikiAPI:
     """docstring for WikiAPI."""
 
-    def __init__(self, query):
+    def __init__(self, data):
         super(WikiAPI, self).__init__()
-        self.query = query
+        self.data = data
         self.geo_query = ""
         self.page_query = ""
 
+    def run(self):
+        self.build()
+        self.geo_search()
+        self.page_search()
+        return self.page()
+
     def build(self, type):
-        if isinstance(type, Type.GEO):
+        if type == Type.GEO:
             self.geo_query = (
-                f"list=geosearch&gscoord={self.query['latitude']}|"
-                f"{self.query['longitude']}&gsradius=10000&gslimit=10&format=json"
+                f"list=geosearch&gscoord={self.data.latitude}|"
+                f"{self.data.longitude}&gsradius=10000&gslimit=10&format=json"
             )
         else:
             self.page_query = (
-                f"pageids={self.query}&prop=extracts&exintro&"
+                f"pageids={self.data.page_id}&prop=extracts&exintro&"
                 "format=json&prop=info|extracts&inprop=url"
             )
 
     def geo_search(self):
-        pass
+        try:
+            response = requests.get(f"{WIKI_URL}{self.geo_query}")
+            self.data = json.loads(response.content)["query"]["geosearch"][0]
+        except requests.exceptions.RequestException as e:
+            print(e)
 
     def page_search(self):
-        pass
+        try:
+            response = requests.get(f"{WIKI_URL}{self.page_query}")
+            self.data = json.loads(response.content)["query"]["pages"][
+                str(self.data.page_id)
+            ]
+        except requests.exceptions.RequestException as e:
+            print(e)
 
     def page(self):
-        pass
+        wiki = Wiki(
+            address=self.data["formatted_address"],
+            latitude=self.data["geometry"]["location"]["lat"],
+            longitude=self.data["geometry"]["location"]["lng"],
+            name=self.data["name"],
+            rating=self.data["rating"],
+        )
+        return wiki
