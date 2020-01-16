@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+import re
+import json
+import requests
+from settings import GMAPS_URL, GMAPS_KEY
 
 
 class Place:
@@ -16,5 +20,27 @@ class Place:
 class GMapsAPI:
     """docstring for GMapsAPI."""
 
-    def __init__(self):
+    def __init__(self, query):
         super(GMapsAPI, self).__init__()
+        self.query = query
+        self.data = {}
+
+    def build(self):
+        self.query = re.sub("\\s", "+", self.query)
+        self.query = f"""input={self.query}&inputtype=textquery&fields=photos,
+                         formatted_address,name,rating,opening_hours,geometry"""
+
+    def place_search(self):
+        response = requests.get(f"{GMAPS_URL}{self.query}&key={GMAPS_KEY}")
+        self.data = json.loads(response.content)["candidates"][0]
+        return self.data
+
+    def place(self):
+        place = Place(
+            address=self.data["formatted_address"],
+            latitude=self.data["geometry"]["location"]["lat"],
+            longitude=self.data["geometry"]["location"]["lng"],
+            name=self.data["name"],
+            rating=self.data["rating"],
+        )
+        return place
