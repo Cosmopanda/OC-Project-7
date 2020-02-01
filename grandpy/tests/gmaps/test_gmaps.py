@@ -6,26 +6,31 @@ from apps.api.gmaps import Place, GMapsAPI
 
 class GMapsTestCase(TestCase):
     def setUp(self):
-        self.API = GMapsAPI("connais adresse OpenClassrooms")
-        self.place_query = GMapsAPI.build()
-        self.place_search = GMapsAPI.place_search()
-        self.place = GMapsAPI.place()
-
-    def test_place_search(self):
-        with open("../../data/places.json") as f:
-            data = json.load(f)
-            self.assertEqual(self.place, data)
-
-    def test_build(self):
-        place_query = "input=Openclassroom&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry"
-        self.assertEqual(self.place_query, place_query)
-
-    def test_place(self):
-        place = Place(
+        self.API = GMapsAPI("OpenClassrooms")
+        self.place_query = (
+            "input=OpenClassrooms&inputtype=textquery&fields=photos,"
+            "formatted_address,name,rating,opening_hours,geometry"
+        )
+        with open("data/places.json") as f:
+            self.place_search = json.load(f)
+        self.place = Place(
             address="7 Cité Paradis, 75010 Paris, France",
             latitude=48.8748465,
             longitude=2.3504873,
             name="OpenClassrooms",
-            rating=3.3,
+            rating=3.4,
         )
-        self.assertEqual(self.place, place)
+
+    def test_place_search(self):
+        self.assertEqual(self.API.place_search(self.place_query), self.place_search)
+
+    def test_build(self):
+        self.assertEqual(self.API.build(), self.place_query)
+
+    def test_place(self):
+        place = self.API.place(self.place_search)
+        self.assertEqual(place.address, self.place.address)
+        self.assertEqual(place.latitude, self.place.latitude)
+        self.assertEqual(place.longitude, self.place.longitude)
+        self.assertEqual(place.name, self.place.name)
+        self.assertEqual(place.rating, self.place.rating)
