@@ -8,18 +8,23 @@ class QueryTestCase(unittest.TestCase):
         self.query = Query(
             "Salut GrandPy ! Est-ce que tu connais l'adresse d'OpenClassrooms ?"
         )
-        self.tokenized = [
+        self.query_sentences = [
             "Salut GrandPy !",
             "Est-ce que tu connais l'adresse d'OpenClassrooms ?",
         ]
-        self.question = "Est-ce que tu connais l'adresse d'OpenClassrooms ?"
+        self.query_question = "Est-ce que tu connais l'adresse d'OpenClassrooms ?"
+        self.search_term = "OpenClassrooms"
 
     def test_tokenize_sentences(self):
-        self.assertEqual(self.query.tokenize_sentences() == self.tokenized)
+        self.assertEqual(self.query.tokenize_sentences(), self.query_sentences)
 
-    def test_question(self):
-        self.assertEqual(self.query.question() == self.question)
+    def test_find_question(self):
+        self.assertEqual(
+            self.query.find_question(self.query_sentences), self.query_question
+        )
 
-    # Can't test the result. Maybe test isinstance(spacy.tokens.token.Token)?
-    # def test_tagger(self):
-    # self.assertEqual(self.query.tagger() == self.tagged)
+    def test_parse(self):
+        self.assertEqual(self.query.parse(), self.search_term)
+
+    def test_pipe(self):
+        self.assertEqual(self.query.pipe(), self.search_term)
