@@ -7,10 +7,7 @@ from apps.api.gmaps import Place, GMapsAPI
 class GMapsTestCase(TestCase):
     def setUp(self):
         self.API = GMapsAPI("OpenClassrooms")
-        self.place_query = (
-            "input=OpenClassrooms&inputtype=textquery&fields=photos,"
-            "formatted_address,name,rating,opening_hours,geometry"
-        )
+        self.place_query = "input=OpenClassrooms&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry"
         with open("data/places.json") as f:
             self.place_search = json.load(f)
         self.place = Place(
