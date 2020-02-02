@@ -25,30 +25,22 @@ class GMapsAPI:
         self.query = query
         self.data = {}
 
-    def run(self):
-        self.build()
-        self.place_search()
-        return self.place()
-
     def build(self):
-        self.query = (
-            f"input={self.query}&inputtype=textquery&fields=photos,"
-            "formatted_address,name,rating,opening_hours,geometry"
-        )
+        return f"input={self.query}&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry"
 
-    def place_search(self):
+    def place_search(self, query):
         try:
-            response = requests.get(f"{GMAPS_URL}{self.query}&key={GMAPS_KEY}")
-            self.data = json.loads(response.content)["candidates"][0]
+            response = requests.get(f"{GMAPS_URL}{query}&key={GMAPS_KEY}")
+            return json.loads(response.content)["candidates"][0]
         except requests.exceptions.RequestException as e:
             print(e)
 
-    def place(self):
+    def place(self, data):
         place = Place(
-            address=self.data["formatted_address"],
-            latitude=self.data["geometry"]["location"]["lat"],
-            longitude=self.data["geometry"]["location"]["lng"],
-            name=self.data["name"],
-            rating=self.data["rating"],
+            address=data["formatted_address"],
+            latitude=data["geometry"]["location"]["lat"],
+            longitude=data["geometry"]["location"]["lng"],
+            name=data["name"],
+            rating=data["rating"],
         )
         return place

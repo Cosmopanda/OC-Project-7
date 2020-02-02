@@ -13,63 +13,54 @@ class Type(Enum):
 class Wiki:
     """docstring for Wiki."""
 
-    def __init__(self, page_id, title, extract, link):
+    def __init__(self, page_id, title, extract, url):
         super(Wiki, self).__init__()
         self.page_id = page_id
         self.title = title
         self.extract = extract
-        self.url = link
+        self.url = url
 
 
 class WikiAPI:
     """docstring for WikiAPI."""
 
-    def __init__(self, data):
+    def __init__(self):
         super(WikiAPI, self).__init__()
-        self.data = data
-        self.geo_query = ""
-        self.page_query = ""
 
-    def run(self):
-        self.build()
-        self.geo_search()
-        self.page_search()
-        return self.page()
+    def build_geo(self, data):
+        return (
+            f"list=geosearch&gscoord={data.latitude}|"
+            f"{data.longitude}&gsradius=10000&gslimit=10&format=json"
+        )
 
-    def build(self, type):
-        if type == Type.GEO:
-            self.geo_query = (
-                f"list=geosearch&gscoord={self.data.latitude}|"
-                f"{self.data.longitude}&gsradius=10000&gslimit=10&format=json"
-            )
-        else:
-            self.page_query = (
-                f"pageids={self.data.page_id}&prop=extracts&exintro&"
-                "format=json&prop=info|extracts&inprop=url"
-            )
+    def build_page(self, data):
+        return (
+            f"pageids={data['pageid']}&prop=extracts&exintro&"
+            "format=json&prop=info|extracts&inprop=url"
+        )
 
-    def geo_search(self):
+    def geo_search(self, geo_query):
         try:
-            response = requests.get(f"{WIKI_URL}{self.geo_query}")
-            self.data = json.loads(response.content)["query"]["geosearch"][0]
+            response = requests.get(f"{WIKI_URL}{geo_query}")
+            data = json.loads(response.content)["query"]["geosearch"][0]
+            return data
+
         except requests.exceptions.RequestException as e:
             print(e)
 
-    def page_search(self):
+    def page_search(self, page_query, data):
         try:
-            response = requests.get(f"{WIKI_URL}{self.page_query}")
-            self.data = json.loads(response.content)["query"]["pages"][
-                str(self.data.page_id)
-            ]
+            response = requests.get(f"{WIKI_URL}{page_query}")
+            data = json.loads(response.content)["query"]["pages"][str(data["pageid"])]
+            return data
         except requests.exceptions.RequestException as e:
             print(e)
 
-    def page(self):
+    def page(self, data):
         wiki = Wiki(
-            address=self.data["formatted_address"],
-            latitude=self.data["geometry"]["location"]["lat"],
-            longitude=self.data["geometry"]["location"]["lng"],
-            name=self.data["name"],
-            rating=self.data["rating"],
+            page_id=data["pageid"],
+            title=data["title"],
+            extract=data["extract"],
+            url=data["fullurl"],
         )
         return wiki
