@@ -1,6 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>GrandPy</h1>
-<p>{{ query.query }}</p>
+  <div class="container">
+    <div class="row">
+      <div class="chat-wrapper green-shadow">
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <form method="POST" action="{{ url_for('query') }}" id="query-form">
+      <div class="row">
+        <input class="green-shadow" id="query" name="query" type="text" placeholder="Posez moi une question...">
+      </div>
+      <div class="row">
+        <input class="green-shadow" type="submit" value="Demander">
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+{% block ajax %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#query-form').submit(function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: '/query',
+        type: 'POST',
+        data: {'query': $('#query').val()},
+        success: function(data) {
+          answer = data.answer;
+          $('.chat-wrapper').append('<p>' + answer + '</p>');
+          // query = data.query;
+          // place = JSON.parse(data.place);
+          // page = JSON.parse(data.page);
+          // $('.chat-wrapper').append('<p>' + query + '</p>');
+          // $('.chat-wrapper').append('<p>' + page.extract + '</p>');
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
+    });
+  });
+</script>
 {% endblock %}

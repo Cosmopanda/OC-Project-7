@@ -1,23 +1,47 @@
 #!/usr/bin/python3
-
-from flask import Flask, render_template, jsonify
+import json
+from flask import Flask, render_template, jsonify, request
+from flask_cors import CORS
+from .apps.query.forms import QueryForm
 from .apps.query.query import Query
+from .apps.api.gmaps import GMapsAPI
+from .apps.api.wiki import WikiAPI
 
 app = Flask(__name__)
+CORS(app, resources={r"/query": {"origins": "*"}})
+app.config.from_pyfile("settings.py")
 
 
 @app.route("/")
 def index():
-    q = Query()
-    q.tokenize_sentences()
-    q.question()
-    q.tagger()
-    return render_template("index.html", query=q)
+    query_form = QueryForm()
+    return render_template("index.html", form=query_form)
 
 
-@app.route("/query/<string:query>", methods=["POST"])
+@app.route("/query", methods=["POST"])
 def query():
-    return jsonify({})
+    return jsonify(answer="Je n'ai pas compris\nlkjwalkjwwwlkjdlkj")
+    if request.method == "POST":
+        try:
+            query = request.form["query"]
+            if query:
+                parser = Query(query)
+                search_term = parser.pipe()
+                if not search_term:
+                    search_term = parser.parse()
+                gmaps = GMapsAPI(search_term)
+                place = gmaps.run()
+                wiki = WikiAPI()
+                page = wiki.run(place)
+                return jsonify(
+                    query=query,
+                    place=json.dumps(place.__dict__),
+                    page=json.dumps(page.__dict__),
+                )
+        except Exception as e:
+            print(e)
+            return jsonify(answer="Je n'ai pas compris")
+    return jsonify(answer="Je n'ai pas compris")
 
 
 if __name__ == "__main__":
