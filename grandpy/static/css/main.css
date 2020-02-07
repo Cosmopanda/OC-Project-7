@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+body {
+  background-color: #EEF5DB;
+  font-family: "Open Sans", sans-serif;
+}
+
+.chat-wrapper {
+  background-color: white;
+  padding: 20px;
+  width: 100%;
+  height: 70vh;
+  overflow: scroll;
+  border-radius: 10px;
+  box-shadow: 2px 2px 0px 0px black;
+}
+
+.green-shadow {
+  box-shadow: inset -5px -5px 0px 0px #59C9A5;
+}
+
+input {
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  margin-top: 15px;
+}
+input[type=text]:focus {
+  outline: none;
+}
+input[type=submit] {
+  text-decoration: none;
+  background-color: white;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/*# sourceMappingURL=main.css.map */
