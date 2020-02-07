@@ -1,13 +1,7 @@
 #!/usr/bin/python3
 import json
 import requests
-from enum import Enum
-from settings import WIKI_URL
-
-
-class Type(Enum):
-    PAGE = 1
-    GEO = 2
+from grandpy.settings import WIKI_URL
 
 
 class Wiki:
@@ -27,10 +21,17 @@ class WikiAPI:
     def __init__(self):
         super(WikiAPI, self).__init__()
 
-    def build_geo(self, data):
+    def run(self, place):
+        geo_query = self.build_geo(place)
+        res = self.geo_search(geo_query)
+        page_query = self.build_page(res)
+        data = self.page_search(page_query, res)
+        return self.page(data)
+
+    def build_geo(self, place):
         return (
-            f"list=geosearch&gscoord={data.latitude}|"
-            f"{data.longitude}&gsradius=10000&gslimit=10&format=json"
+            f"list=geosearch&gscoord={place.latitude}|"
+            f"{place.longitude}&gsradius=10000&gslimit=10&format=json"
         )
 
     def build_page(self, data):
@@ -48,10 +49,10 @@ class WikiAPI:
         except requests.exceptions.RequestException as e:
             print(e)
 
-    def page_search(self, page_query, data):
+    def page_search(self, page_query, res):
         try:
             response = requests.get(f"{WIKI_URL}{page_query}")
-            data = json.loads(response.content)["query"]["pages"][str(data["pageid"])]
+            data = json.loads(response.content)["query"]["pages"][str(res["pageid"])]
             return data
         except requests.exceptions.RequestException as e:
             print(e)
