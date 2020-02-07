@@ -2,19 +2,18 @@
 import re
 import json
 import requests
-from settings import GMAPS_URL, GMAPS_KEY
+from grandpy.settings import GMAPS_URL, GMAPS_KEY
 
 
 class Place:
     """docstring for Place."""
 
-    def __init__(self, address, latitude, longitude, name, rating):
+    def __init__(self, address, latitude, longitude, name):
         super(Place, self).__init__()
         self.address = address
         self.latitude = latitude
         self.longitude = longitude
         self.name = name
-        self.rating = rating
 
 
 class GMapsAPI:
@@ -23,32 +22,27 @@ class GMapsAPI:
     def __init__(self, query):
         super(GMapsAPI, self).__init__()
         self.query = query
-        self.data = {}
 
     def run(self):
-        self.build()
-        self.place_search()
-        return self.place()
+        query = self.build()
+        data = self.place_search(query)
+        return self.place(data)
 
     def build(self):
-        self.query = (
-            f"input={self.query}&inputtype=textquery&fields=photos,"
-            "formatted_address,name,rating,opening_hours,geometry"
-        )
+        return f"input={self.query}&inputtype=textquery&fields=formatted_address,name,opening_hours,geometry"
 
-    def place_search(self):
+    def place_search(self, query):
         try:
-            response = requests.get(f"{GMAPS_URL}{self.query}&key={GMAPS_KEY}")
-            self.data = json.loads(response.content)["candidates"][0]
+            response = requests.get(f"{GMAPS_URL}{query}&key={GMAPS_KEY}")
+            return json.loads(response.content)["candidates"][0]
         except requests.exceptions.RequestException as e:
             print(e)
 
-    def place(self):
+    def place(self, data):
         place = Place(
-            address=self.data["formatted_address"],
-            latitude=self.data["geometry"]["location"]["lat"],
-            longitude=self.data["geometry"]["location"]["lng"],
-            name=self.data["name"],
-            rating=self.data["rating"],
+            address=data["formatted_address"],
+            latitude=data["geometry"]["location"]["lat"],
+            longitude=data["geometry"]["location"]["lng"],
+            name=data["name"],
         )
         return place

@@ -1,5 +1,5 @@
-from wtforms import Form
+from wtforms import Form, StringField, validators
 
 
 class QueryForm(Form):
-    pass
+    query = StringField("Query", [validators.Length(min=3, max=255)])
