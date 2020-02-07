@@ -7,7 +7,7 @@ from apps.api.gmaps import Place, GMapsAPI
 class GMapsTestCase(TestCase):
     def setUp(self):
         self.API = GMapsAPI("OpenClassrooms")
-        self.place_query = "input=OpenClassrooms&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry"
+        self.place_query = "input=OpenClassrooms&inputtype=textquery&fields=formatted_address,name,opening_hours,geometry"
         with open("data/places.json") as f:
             self.place_search = json.load(f)
         self.place = Place(
@@ -15,7 +15,6 @@ class GMapsTestCase(TestCase):
             latitude=48.8748465,
             longitude=2.3504873,
             name="OpenClassrooms",
-            rating=3.4,
         )
 
     def test_place_search(self):
@@ -30,4 +29,3 @@ class GMapsTestCase(TestCase):
         self.assertEqual(place.latitude, self.place.latitude)
         self.assertEqual(place.longitude, self.place.longitude)
         self.assertEqual(place.name, self.place.name)
-        self.assertEqual(place.rating, self.place.rating)

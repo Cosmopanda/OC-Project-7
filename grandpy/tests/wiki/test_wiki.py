@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import json
 from unittest import TestCase
-from apps.api.wiki import Wiki, WikiAPI, Type
+from apps.api.wiki import Wiki, WikiAPI
 from apps.api.gmaps import Place
 
 
