@@ -2,7 +2,7 @@
 import re
 import json
 from unidecode import unidecode
-from settings import STOPWORDS, POS_TAGS, NLP
+from grandpy.settings import STOPWORDS, POS_TAGS, NLP
 
 
 class Query:

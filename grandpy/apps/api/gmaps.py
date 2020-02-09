@@ -2,7 +2,7 @@
 import re
 import json
 import requests
-from settings import GMAPS_URL, GMAPS_KEY
+from grandpy.settings import GMAPS_URL, GMAPS_KEY
 
 
 class Place:

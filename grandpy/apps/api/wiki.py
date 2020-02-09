@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import json
 import requests
-from settings import WIKI_URL
+from grandpy.settings import WIKI_URL
 
 
 class Wiki:
