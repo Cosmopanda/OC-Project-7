@@ -53,6 +53,8 @@ class WikiAPI:
         try:
             response = requests.get(f"{WIKI_URL}{page_query}")
             data = json.loads(response.content)["query"]["pages"][str(res["pageid"])]
+            del data["touched"]
+            del data["lastrevid"]
             return data
         except requests.exceptions.RequestException as e:
             print(e)

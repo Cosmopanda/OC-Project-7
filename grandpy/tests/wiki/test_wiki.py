@@ -22,7 +22,6 @@ class WikiTestCase(TestCase):
             latitude=48.8748465,
             longitude=2.3504873,
             name="OpenClassrooms",
-            rating=3.4,
         )
         self.page = Wiki(
             page_id=5091748,
