@@ -2,7 +2,9 @@
 import re
 import json
 from unidecode import unidecode
-from grandpy.settings import STOPWORDS, POS_TAGS, NLP
+
+import fr_core_news_md
+from grandpy.settings import STOPWORDS, POS_TAGS
 
 
 class Query:
@@ -11,6 +13,7 @@ class Query:
     def __init__(self, query):
         super(Query, self).__init__()
         self.query = query
+        self.NLP = fr_core_news_md.load()
 
     def find_question(self, sentences):
         for sentence in sentences:
@@ -19,7 +22,7 @@ class Query:
 
     def tokenize_sentences(self):
         """Returns a list of sentences"""
-        return [sentence.text for sentence in NLP(self.query).sents]
+        return [sentence.text for sentence in self.NLP(self.query).sents]
 
     def pipe(self):
         tokens = []
@@ -28,7 +31,7 @@ class Query:
         question = self.find_question(sentences)
 
         # Tokenizes the words and recognizes entities
-        for doc in NLP.pipe([question]):
+        for doc in self.NLP.pipe([question]):
             for entity in doc.ents:
                 tokens.append(entity.text)
 
@@ -41,7 +44,7 @@ class Query:
         question = self.find_question(sentences)
 
         # Tokenizes and tags words
-        tagged = [(token, token.pos_) for token in NLP(question)]
+        tagged = [(token, token.pos_) for token in self.NLP(question)]
 
         # Looks for relevant words not matching stop words
         with open(STOPWORDS) as f:

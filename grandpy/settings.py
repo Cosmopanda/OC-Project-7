@@ -2,8 +2,6 @@
 import os
 import subprocess
 
-import spacy
-
 DEBUG = False
 CSRF_ENABLED = True
 
@@ -24,6 +22,3 @@ POS_TAGS = [
     "LOC",  # Non-GPE locations, mountain ranges, bodies of water.
     "EVENT",  # Named hurricanes, battles, wars, sports events, etc.
 ]  # Move to constants.py/settings.py?
-
-# French model https://spacy.io/models/fr/
-NLP = spacy.load("fr_core_news_md")
