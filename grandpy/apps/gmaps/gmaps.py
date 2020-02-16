@@ -1,8 +1,11 @@
 #!/usr/bin/python3
-import re
+import os
 import json
+
 import requests
-from grandpy.settings import GMAPS_URL, GMAPS_KEY
+
+GMAPS_URL = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?"
+GMAPS_KEY = os.environ["GMAPS_KEY"]
 
 
 class Place:

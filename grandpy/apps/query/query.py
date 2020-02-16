@@ -1,10 +1,20 @@
 #!/usr/bin/python3
 import re
 import json
+
 from unidecode import unidecode
 
-import fr_core_news_md
-from grandpy.settings import STOPWORDS, POS_TAGS
+STOPWORDS = "stopwords.json"
+
+POS_TAGS = [
+    "PROPN",  # Proper Noun
+    "NOUN",
+    "FAC",  # Buildings, airports, highways, bridges, etc.
+    "ORG",  # Companies, agencies, institutions, etc.
+    "GPE",  # Countries, cities, states.
+    "LOC",  # Non-GPE locations, mountain ranges, bodies of water.
+    "EVENT",  # Named hurricanes, battles, wars, sports events, etc.
+]
 
 
 class Query:
@@ -13,7 +23,6 @@ class Query:
     def __init__(self, query):
         super(Query, self).__init__()
         self.query = query
-        self.NLP = fr_core_news_md.load()
 
     def find_question(self, sentences):
         for sentence in sentences:

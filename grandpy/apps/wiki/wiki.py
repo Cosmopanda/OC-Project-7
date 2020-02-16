@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 import json
+
 import requests
-from grandpy.settings import WIKI_URL
+
+WIKI_URL = "https://fr.wikipedia.org/w/api.php?action=query&"
 
 
 class Wiki:
