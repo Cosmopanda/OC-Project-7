@@ -4,11 +4,11 @@ import json
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 
-from grandpy.settings import GMAPS_KEY
-from grandpy.apps.query.forms import QueryForm
-from grandpy.apps.query.query import Query
-from grandpy.apps.api.gmaps import GMapsAPI
-from grandpy.apps.api.wiki import WikiAPI
+from settings import GMAPS_KEY
+from apps.query.forms import QueryForm
+from apps.query.query import Query
+from apps.api.gmaps import GMapsAPI
+from apps.api.wiki import WikiAPI
 
 app = Flask(__name__)
 CORS(app, resources={r"/query": {"origins": "*"}})
