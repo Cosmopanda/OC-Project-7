@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import os
+import subprocess
 
 import spacy
 
@@ -25,4 +26,8 @@ POS_TAGS = [
 ]  # Move to constants.py/settings.py?
 
 # French model https://spacy.io/models/fr/
-NLP = spacy.load("fr_core_news_md")
+try:
+    NLP = spacy.load("fr_core_news_md")
+except Exception as e:  # NOQA
+    subprocess.run(["python", "-m", "spacy", "download", "fr_core_news_md"])
+    NLP = spacy.load("fr_core_news_md")
