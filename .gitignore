@@ -1,6 +1,5 @@
 # Local env
 env/
-settings.py
 *.css.map
 
 # Byte-compiled / optimized / DLL files
