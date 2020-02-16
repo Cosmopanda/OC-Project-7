@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 import json
 
-from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
+from flask import Flask, render_template, jsonify, request
 
-from settings import GMAPS_KEY
 from apps.query.forms import QueryForm
 from apps.query.query import Query
-from apps.api.gmaps import GMapsAPI
-from apps.api.wiki import WikiAPI
+from apps.gmaps.gmaps import GMapsAPI
+from apps.wiki.wiki import WikiAPI
 
 app = Flask(__name__)
 CORS(app, resources={r"/query": {"origins": "*"}})
