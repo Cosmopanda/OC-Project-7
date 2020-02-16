@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 import json
 from unittest import TestCase
-from apps.api.wiki import Wiki, WikiAPI
-from apps.api.gmaps import Place
+from grandpy.apps.api.wiki import Wiki, WikiAPI
+from grandpy.apps.api.gmaps import Place
 
 
 class WikiTestCase(TestCase):

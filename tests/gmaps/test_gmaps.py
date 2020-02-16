@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import json
 from unittest import TestCase
-from apps.api.gmaps import Place, GMapsAPI
+from grandpy.apps.api.gmaps import Place, GMapsAPI
 
 
 class GMapsTestCase(TestCase):

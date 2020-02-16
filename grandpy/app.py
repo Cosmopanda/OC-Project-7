@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 import json
+
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
-from .apps.query.forms import QueryForm
-from .apps.query.query import Query
-from .apps.api.gmaps import GMapsAPI
-from .apps.api.wiki import WikiAPI
+
+from grandpy.settings import GMAPS_KEY
+from grandpy.apps.query.forms import QueryForm
+from grandpy.apps.query.query import Query
+from grandpy.apps.api.gmaps import GMapsAPI
+from grandpy.apps.api.wiki import WikiAPI
 
 app = Flask(__name__)
 CORS(app, resources={r"/query": {"origins": "*"}})
@@ -20,7 +23,6 @@ def index():
 
 @app.route("/query", methods=["POST"])
 def query():
-    return jsonify(answer="Je n'ai pas compris\nlkjwalkjwwwlkjdlkj")
     if request.method == "POST":
         try:
             query = request.form["query"]

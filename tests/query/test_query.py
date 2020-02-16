@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import unittest
-from apps.query.query import Query
+from grandpy.apps.query.query import Query
 
 
 class QueryTestCase(unittest.TestCase):
