@@ -18,8 +18,5 @@
 			}
 		}
 	},
-	"name": "OpenClassrooms",
-	"opening_hours": {
-		"open_now": false
-	}
+	"name": "OpenClassrooms"
 }
