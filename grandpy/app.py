@@ -1,17 +1,23 @@
 #!/usr/bin/python3
 import json
 
+# import nltk
 from flask_cors import CORS
 from flask import Flask, render_template, jsonify, request
 
-from apps.query.forms import QueryForm
-from apps.query.query import Query
-from apps.gmaps.gmaps import GMapsAPI
-from apps.wiki.wiki import WikiAPI
+from grandpy.apps.query.forms import QueryForm
+from grandpy.apps.query.query import Query
+from grandpy.apps.gmaps.gmaps import GMapsAPI
+from grandpy.apps.wiki.wiki import WikiAPI
 
 app = Flask(__name__)
 CORS(app, resources={r"/query": {"origins": "*"}})
 app.config.from_pyfile("settings.py")
+
+
+def format_answer(place, page):
+    answer = f"Adresse: {place.address}\nExtract: {page.extract}\nURL: {page.url}\n"
+    return answer
 
 
 @app.route("/")
@@ -27,22 +33,19 @@ def query():
             query = request.form["query"]
             if query:
                 parser = Query(query)
-                search_term = parser.pipe()
-                if not search_term:
-                    search_term = parser.parse()
+                search_term = parser.parse()
                 gmaps = GMapsAPI(search_term)
                 place = gmaps.run()
+                if not place:
+                    return jsonify(query=query, answer="Je n'ai pas compris.")
                 wiki = WikiAPI()
                 page = wiki.run(place)
-                return jsonify(
-                    query=query,
-                    place=json.dumps(place.__dict__),
-                    page=json.dumps(page.__dict__),
-                )
+                answer = format_answer(place, page)
+                return jsonify(query=query, answer=answer)
         except Exception as e:
             print(e)
-            return jsonify(answer="Je n'ai pas compris")
-    return jsonify(answer="Je n'ai pas compris")
+            return jsonify(query=query, answer="Je n'ai pas compris")
+    return jsonify(query=query, answer="Je n'ai pas compris")
 
 
 if __name__ == "__main__":

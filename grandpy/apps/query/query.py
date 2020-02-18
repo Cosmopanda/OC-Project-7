@@ -3,18 +3,7 @@ import re
 import json
 
 from unidecode import unidecode
-
-STOPWORDS = "stopwords.json"
-
-POS_TAGS = [
-    "PROPN",  # Proper Noun
-    "NOUN",
-    "FAC",  # Buildings, airports, highways, bridges, etc.
-    "ORG",  # Companies, agencies, institutions, etc.
-    "GPE",  # Countries, cities, states.
-    "LOC",  # Non-GPE locations, mountain ranges, bodies of water.
-    "EVENT",  # Named hurricanes, battles, wars, sports events, etc.
-]
+from nltk import sent_tokenize, word_tokenize
 
 
 class Query:
@@ -24,43 +13,29 @@ class Query:
         super(Query, self).__init__()
         self.query = query
 
-    def find_question(self, sentences):
-        for sentence in sentences:
-            if sentence[-1] == "?":
-                return sentence
-
-    def tokenize_sentences(self):
-        """Returns a list of sentences"""
-        return [sentence.text for sentence in self.NLP(self.query).sents]
-
-    def pipe(self):
-        tokens = []
-
-        sentences = self.tokenize_sentences()
-        question = self.find_question(sentences)
-
-        # Tokenizes the words and recognizes entities
-        for doc in self.NLP.pipe([question]):
-            for entity in doc.ents:
-                tokens.append(entity.text)
-
-        return " ".join(tokens)
-
     def parse(self):
         tokens = []
 
-        sentences = self.tokenize_sentences()
-        question = self.find_question(sentences)
+        # Tokenize sentences
+        sentences = sent_tokenize(self.query)
+
+        # Find a question
+        for sentence in sentences:
+            if sentence[-1] == "?":
+                question = [sentence]
+                break
+
+        # Removing non alpha-numeric characters
+        question = re.sub(r"[\_\-\'\"]", " ", question[0][:-1])
 
         # Tokenizes and tags words
-        tagged = [(token, token.pos_) for token in self.NLP(question)]
+        tagged = word_tokenize(question)
 
         # Looks for relevant words not matching stop words
-        with open(STOPWORDS) as f:
+        with open("./stopwords.json") as f:
             stopwords = json.load(f)["stopwords"]
             for token in tagged:
-                token_str = str(token[0])
-                if token[1] in POS_TAGS and token_str not in stopwords:
-                    tokens.append(token_str)
+                if token.lower() not in stopwords:
+                    tokens.append(token)
 
         return " ".join(tokens)

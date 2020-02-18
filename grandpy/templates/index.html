@@ -30,10 +30,9 @@
         data: {'query': $('#query').val()},
         success: function(data) {
           query = data.query;
-          place = JSON.parse(data.place);
-          page = JSON.parse(data.page);
+          answer = data.answer;
           $('.chat-wrapper').append('<p>' + query + '</p>');
-          $('.chat-wrapper').append('<p>' + page.extract + '</p>');
+          $('.chat-wrapper').append('<p>' + answer + '</p>');
         },
         error: function(error) {
           console.log(error);
