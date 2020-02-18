@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import json
 
-# import nltk
+import nltk
 from flask_cors import CORS
 from flask import Flask, render_template, jsonify, request
 
@@ -13,6 +13,8 @@ from grandpy.apps.wiki.wiki import WikiAPI
 app = Flask(__name__)
 CORS(app, resources={r"/query": {"origins": "*"}})
 app.config.from_pyfile("settings.py")
+
+nltk.download("punkt")
 
 
 def format_answer(place, page):
