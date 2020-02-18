@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 import json
 from unittest import TestCase
-from grandpy.apps.api.gmaps import Place, GMapsAPI
+from grandpy.apps.gmaps.gmaps import Place, GMapsAPI
 
 
 class GMapsTestCase(TestCase):
     def setUp(self):
         self.API = GMapsAPI("OpenClassrooms")
-        self.place_query = "input=OpenClassrooms&inputtype=textquery&fields=formatted_address,name,opening_hours,geometry"
+        self.place_query = "input=OpenClassrooms&inputtype=textquery&fields=formatted_address,name,geometry"
         with open("data/places.json") as f:
             self.place_search = json.load(f)
         self.place = Place(
