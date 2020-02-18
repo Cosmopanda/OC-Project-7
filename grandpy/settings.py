@@ -1,4 +1,4 @@
 #!/usr/bin/python3
 
-DEBUG = False
+DEBUG = True
 CSRF_ENABLED = True
