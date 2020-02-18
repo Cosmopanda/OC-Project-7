@@ -8,7 +8,7 @@ body {
   background-color: white;
   padding: 20px;
   width: 100%;
-  height: 70vh;
+  height: 60vh;
   overflow: scroll;
   border-radius: 10px;
   box-shadow: 2px 2px 0px 0px black;
@@ -36,6 +36,7 @@ input[type=submit] {
 
 footer {
   height: 50px;
+  margin-top: 25px;
   color: black;
   background: none;
 }
