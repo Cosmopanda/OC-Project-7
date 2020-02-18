@@ -15,6 +15,7 @@ class Query:
 
     def parse(self):
         tokens = []
+        question = ""
 
         # Tokenize sentences
         sentences = sent_tokenize(self.query)
