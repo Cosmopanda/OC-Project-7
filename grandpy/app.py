@@ -1,4 +1,12 @@
 #!/usr/bin/python3
+#                 __                              .__       .__    .__
+#  ________ _____/  |_  ________ __  _____   ____ |__| _____|  |__ |__|
+#  \___   // __ \   __\/  ___/  |  \/     \_/ __ \|  |/  ___/  |  \|  |
+#   /    /\  ___/|  |  \___ \|  |  /  Y Y  \  ___/|  |\___ \|   Y  \  |
+#  /_____ \\___  >__| /____  >____/|__|_|  /\___  >__/____  >___|  /__|
+#        \/    \/          \/            \/     \/        \/     \/
+# Made on patorjk.com
+
 import json
 
 import nltk
@@ -18,7 +26,9 @@ nltk.download("punkt")
 
 
 def format_answer(place, page):
-    answer = f"Adresse: {place.address}\nExtract: {page.extract}\nURL: {page.url}\n"
+    answer = (
+        f"Adresse: {place.address}\nExtract: {page.extract}\nURL: {page.url}\n"
+    )
     return answer
 
 
