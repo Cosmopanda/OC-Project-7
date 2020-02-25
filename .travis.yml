@@ -1,7 +1,6 @@
 language: python
 install:
   - pip3 install -r requirements.txt
-
+  - python -c "import nltk; nltk.download('punkt')"
 script:
-  - cd grandpy
   - nosetests
