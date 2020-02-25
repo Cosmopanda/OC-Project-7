@@ -1,6 +1,9 @@
 language: python
 install:
-  - pip3 install -r requirements.txt
-  - python -c "import nltk; nltk.download('punkt')"
+- pip3 install -r requirements.txt
+- python -c "import nltk; nltk.download('punkt')"
 script:
-  - cd grandpy/; nosetests
+- cd grandpy/; nosetests
+env:
+  global:
+  - secure: TFzvbUGKnnxrBs25Q73uuSm2NiGDaltHkdw+RdQFhSHKoZsO9HW4/NCXO87t7RkROuQcgTIiZBNQGeWBPm6NBeo6wU7zg4nFgUZmho9mhUflLvMUlC5gjImtz/GwN4FxIk4KcmWGj8a1fgr4i7DfBmHrTAlDsEiHR6jGqx+2/y1F0mvJ+e8H8QbbNdssQujyp8YVJ899vB2nnFXJgMumGQIb3DVXIH84OkZKpAnycZB5LxxyIHwvIVQHaI51TEr8sswrGDI164JqkzE5L7RcRYRFDeTzUfbwIjX8t7BrKZSYq+z6pVn105eW/aIgoucvKWa1Y1/bKCd8sVV4VJxCR7cNdC4OdgHj2ZGF0XiIb6i4/mVbcv15yvRcePeyugS+W9UGzv5zeQvJZPIR5iZgSvsEYHIZl7KScqcmJeloAzGZthkgmiisGVIIaamWHWMDNnz1fnltnmEKV7iVJggS3WEBxt3TyeQRTgDSaS6w9qRq1Lb6DypRbkUOgFx6gDarlwG3ev1WncTioL7Jge3/bpPbIZxxvHC9+AlYoRed3sSMhJUK0tkUkvsNKR+zSj0z1v1MYJTXiWUYHS5WOFSfPxT0Su3icxOoyCDJc+0WhCwmZGafEt1dEBc/NHxtappA8B0gyZVsxCFE6fZ0rVmrOvlipl4VAtihb3UhMxN7Bt4=
