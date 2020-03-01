@@ -48,7 +48,7 @@ def format_answer(place=None, page=None):
               frameborder="0" style="border:0"
               src="https://www.google.com/maps/embed/v1/view?key={GMAPS_KEY}
               &center={place.latitude},{place.longitude}
-              &zoom=17" allowfullscreen>
+              &zoom=18" allowfullscreen>
             </iframe>
             """
         else:
@@ -62,7 +62,7 @@ def format_answer(place=None, page=None):
               frameborder="0" style="border:0"
               src="https://www.google.com/maps/embed/v1/view?key={GMAPS_KEY}
               &center={place.latitude},{place.longitude}
-              &zoom=17" allowfullscreen>
+              &zoom=18" allowfullscreen>
             </iframe>
             """
     return answer
