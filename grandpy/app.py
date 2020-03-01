@@ -14,7 +14,7 @@ import nltk
 from flask_cors import CORS
 from flask import Flask, render_template, jsonify, request
 
-from .constants import MESSAGES
+from constants import MESSAGES
 from .apps.query.forms import QueryForm
 from .apps.query.query import Query
 from .apps.gmaps.api import GMapsAPI
