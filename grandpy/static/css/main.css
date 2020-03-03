@@ -2,6 +2,7 @@
 body {
   background-color: #EEF5DB;
   font-family: "Open Sans", sans-serif;
+  font-size: 16px;
 }
 
 .chat-wrapper {
@@ -26,12 +27,28 @@ input {
   padding: 5px;
   margin-top: 15px;
 }
+input[type=text] {
+  transition-property: box-shadow;
+  transition-duration: 1s;
+}
 input[type=text]:focus {
   outline: none;
+  box-shadow: none;
 }
 input[type=submit] {
   text-decoration: none;
+  font-weight: bolder;
+  font-size: 1.2em;
   background-color: white;
+  text-transform: uppercase;
+  transition-property: box-shadow, color, background-color;
+  transition-delay: 0s, 1s, 1s;
+  transition-duration: 2s;
+}
+input[type=submit]:hover {
+  background-color: #59C9A5;
+  color: white;
+  box-shadow: none;
 }
 
 footer {

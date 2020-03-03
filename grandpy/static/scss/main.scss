@@ -7,6 +7,7 @@ $green: #59C9A5;
 body {
   background-color: $beige;
   font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
 }
 
 .chat-wrapper {
@@ -32,14 +33,28 @@ input {
   margin-top: 15px;
 
   &[type='text'] {
+    transition-property: box-shadow;
+    transition-duration: 1s;
     &:focus {
       outline: none;
+      box-shadow: none;
     }
   }
 
   &[type='submit'] {
     text-decoration: none;
+    font-weight: bolder;
+    font-size: 1.2em;
     background-color: white;
+    text-transform: uppercase;
+    transition-property: box-shadow, color, background-color;
+    transition-delay: 0s, 1s, 1s;
+    transition-duration: 2s;
+    &:hover {
+      background-color: $green;
+      color: white;
+      box-shadow: none;
+    }
   }
 }
 
