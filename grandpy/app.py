@@ -32,39 +32,34 @@ GMAPS_KEY = os.environ["GMAPS_KEY"]
 
 
 def format_answer(place=None, page=None):
-    answer = ""
+    answer = {}
 
     if not place:
-        answer += MESSAGES["not_found"]
+        answer["error"] = MESSAGES["not_found"]
         return answer
     if place:
+        answer[
+            "address"
+        ] = f"Voici l'addresse pour {place.name}: {place.address}. "
         if not page:
-            answer += MESSAGES["no_wiki_result"]
-            answer += f"Voici l'addresse pour {place.name}: {place.address}. "
-            answer += f"""
-            <iframe
-              width="400"
-              height="400"
-              frameborder="0" style="border:0"
-              src="https://www.google.com/maps/embed/v1/view?key={GMAPS_KEY}
-              &center={place.latitude},{place.longitude}
-              &zoom=18" allowfullscreen>
-            </iframe>
-            """
+            answer["error"] = MESSAGES["no_wiki_result"]
         else:
-            answer += f"Voici l'addresse pour {place.name}: {place.address}. "
-            answer += MESSAGES["random"][0]
-            answer += f"{page.extract} Tu peux trouver plus d'informations ici <a href='{page.url}'>Wikipedia</a><br/>"
-            answer += f"""
-            <iframe
-              width="400"
-              height="400"
-              frameborder="0" style="border:0"
-              src="https://www.google.com/maps/embed/v1/view?key={GMAPS_KEY}
-              &center={place.latitude},{place.longitude}
-              &zoom=18" allowfullscreen>
-            </iframe>
-            """
+            answer["random"] = MESSAGES["random"][0]
+            answer[
+                "wiki"
+            ] = f"{page.extract} Tu peux trouver plus d'informations ici <a href='{page.url}'>Wikipedia</a><br/>"
+    answer[
+        "map"
+    ] = f"""
+        <iframe
+          width="400"
+          height="400"
+          frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/view?key={GMAPS_KEY}
+          &center={place.latitude},{place.longitude}
+          &zoom=18" allowfullscreen>
+        </iframe>
+        """
     return answer
 
 

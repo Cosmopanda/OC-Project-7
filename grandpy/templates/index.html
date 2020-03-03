@@ -31,8 +31,19 @@
         success: function(data) {
           query = data.query;
           answer = data.answer;
-          $('.chat-wrapper').append('<p>' + query + '</p>');
-          $('.chat-wrapper').append('<p>' + answer + '</p>');
+          $('.chat-wrapper').append('<p class="text-right">' + query + '</p>');
+          if (answer.error) {
+            if (answer.address) {
+              $('.chat-wrapper').append('<p>' + answer.address + '</p>');
+            }
+            $('.chat-wrapper').append('<p>' + answer.error + '</p>');
+          }
+          else {
+            $('.chat-wrapper').append('<p class="text-right">' + answer.address + answer.random + answer.wiki + '<br />' + answer.map + '</p>');
+            // $('.chat-wrapper').append('<p class="text-right">' + answer.random + '</p>');
+            // $('.chat-wrapper').append('<p class="text-right">' + answer.wiki + '</p>');
+            // $('.chat-wrapper').append('<p class="text-right">' + answer.map + '</p>');
+          }
         },
         error: function(error) {
           console.log(error);
