@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 $beige: #EEF5DB;
-$grey: #465775;
+$grey: #ededed;
 $green: #59C9A5;
+$blue: #90bede;
 
 body {
   background-color: $beige;
@@ -11,7 +12,7 @@ body {
 }
 
 .chat-wrapper {
-  background-color: white;
+  background-color: $grey;
   padding: 20px;
   width: 100%;
   height: 60vh;
@@ -33,6 +34,7 @@ input {
   margin-top: 15px;
 
   &[type='text'] {
+    background-color: $grey;
     transition-property: box-shadow;
     transition-duration: 1s;
     &:focus {
@@ -45,17 +47,25 @@ input {
     text-decoration: none;
     font-weight: bolder;
     font-size: 1.2em;
-    background-color: white;
+    background-color: $grey;
     text-transform: uppercase;
-    transition-property: box-shadow, color, background-color;
-    transition-delay: 0s, 1s, 1s;
+    transition-property: box-shadow;
     transition-duration: 2s;
     &:hover {
-      background-color: $green;
-      color: white;
       box-shadow: none;
     }
   }
+}
+
+.bubble {
+  padding: 15px 15px;
+  background-color: $green;
+  color: white;
+  border-radius: 10px;
+}
+
+.blue {
+  background-color: $blue;
 }
 
 footer {
@@ -69,7 +79,6 @@ footer {
     margin-bottom: 10px;
   }
 }
-
 
 ::-webkit-scrollbar {
   display: none;

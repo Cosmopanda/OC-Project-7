@@ -4,6 +4,11 @@
   <div class="container">
     <div class="row">
       <div class="chat-wrapper green-shadow">
+        <div class="col-8">
+          <p class="bubble text-left">
+            Bienvenue mon petit, tu peux me demander l'addresse de lieux, je te raconterai une histoire !
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -21,6 +26,15 @@
 
 {% block ajax %}
 <script type="text/javascript">
+  function sleep(milliseconds) {
+    var start = new Date().getTime();
+      for (var i = 0; i < 1e7; i++) { if ((new Date().getTime() - start)> milliseconds){
+        break;
+      }
+    }
+  }
+
+
   $(document).ready(function() {
     $('#query-form').submit(function(event) {
       event.preventDefault();
@@ -31,15 +45,23 @@
         success: function(data) {
           query = data.query;
           answer = data.answer;
-          $('.chat-wrapper').append('<p class="text-right">' + query + '</p>');
+          bubble_left = '<div class="col-8"><p class="bubble text-left">';
+          bubble_justify = '<div class="col-8"><p class="bubble text-justify">';
+          bubble_center = '<div class="col-6"><p class="bubble text-center">';
+          closing_tag = '</p></div>';
+          $('.chat-wrapper').append('<div class="offset-8"><p class="bubble blue text-right">' + query + closing_tag);
           if (answer.error) {
             if (answer.address) {
-              $('.chat-wrapper').append('<p>' + answer.address + '</p>');
+              $('.chat-wrapper').append(bubble_left + answer.address + closing_tag);
             }
-            $('.chat-wrapper').append('<p>' + answer.error + '</p>');
+            $('.chat-wrapper').append(bubble_left + answer.error + closing_tag);
           }
           else {
-            $('.chat-wrapper').append('<p class="text-right">' + answer.address + answer.random + answer.wiki + '<br />' + answer.map + '</p>');
+            $('.chat-wrapper').append(bubble_left + answer.address + closing_tag);
+            $('.chat-wrapper').append(bubble_left + answer.random + closing_tag);
+            $('.chat-wrapper').append(bubble_justify + answer.wiki + closing_tag);
+            $('.chat-wrapper').append(bubble_left + answer.link + closing_tag);
+            $('.chat-wrapper').append(bubble_center + answer.map + closing_tag);
           }
         },
         error: function(error) {

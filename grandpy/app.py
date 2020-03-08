@@ -40,7 +40,10 @@ def format_answer(place=None, page=None):
             answer["random"] = MESSAGES["random"][0]
             answer[
                 "wiki"
-            ] = f"{page.extract} Tu peux trouver plus d'informations ici <a href='{page.url}'>Wikipedia</a><br/>"
+            ] = f"{page.extract[33:].replace('<p>', '').replace('</p>', '') }<br/>"
+            answer[
+                "link"
+            ] = "Tu peux trouver plus d'informations ici <a href='{page.url}'>Wikipedia</a>"
     answer[
         "map"
     ] = f"""
@@ -89,8 +92,7 @@ def query():
                 return jsonify(query=query, answer=answer)
         except Exception as e:
             print(e)
-            return jsonify(query=query, answer="Je n'ai pas compris")
-    return jsonify(query=query, answer="Je n'ai pas compris")
+            return jsonify(query=query, answer="Je n'ai pas bien entendu.")
 
 
 if __name__ == "__main__":

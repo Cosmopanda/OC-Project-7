@@ -6,7 +6,7 @@ body {
 }
 
 .chat-wrapper {
-  background-color: white;
+  background-color: #ededed;
   padding: 20px;
   width: 100%;
   height: 60vh;
@@ -28,6 +28,7 @@ input {
   margin-top: 15px;
 }
 input[type=text] {
+  background-color: #ededed;
   transition-property: box-shadow;
   transition-duration: 1s;
 }
@@ -39,16 +40,24 @@ input[type=submit] {
   text-decoration: none;
   font-weight: bolder;
   font-size: 1.2em;
-  background-color: white;
+  background-color: #ededed;
   text-transform: uppercase;
-  transition-property: box-shadow, color, background-color;
-  transition-delay: 0s, 1s, 1s;
+  transition-property: box-shadow;
   transition-duration: 2s;
 }
 input[type=submit]:hover {
+  box-shadow: none;
+}
+
+.bubble {
+  padding: 15px 15px;
   background-color: #59C9A5;
   color: white;
-  box-shadow: none;
+  border-radius: 10px;
+}
+
+.blue {
+  background-color: #90bede;
 }
 
 footer {
