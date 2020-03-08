@@ -80,8 +80,11 @@ def query():
                     answer = format_answer(search_term=False)
                     return jsonify(query=query, answer=answer)
                 gmaps = GMapsAPI()
-                response = gmaps.place(search_term)["candidates"][0]
-                place = Place(response)
+                response = gmaps.place(search_term)
+                if response["status"] == "ZERO_RESULTS":
+                    answer = format_answer(search_term=False)
+                    return jsonify(query=query, answer=answer)
+                place = Place(response["candidates"][0])
                 if not place:
                     answer = format_answer()
                     return jsonify(query=query, answer=answer)
