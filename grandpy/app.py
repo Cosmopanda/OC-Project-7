@@ -24,9 +24,12 @@ nltk.download("punkt")
 GMAPS_KEY = os.environ["GMAPS_KEY"]
 
 
-def format_answer(place=None, page=None):
+def format_answer(place=None, page=None, search_term=True):
     answer = {}
 
+    if not search_term:
+        answer["error"] = MESSAGES["no_question"]
+        return answer
     if not place:
         answer["error"] = MESSAGES["not_found"]
         return answer
@@ -73,6 +76,9 @@ def query():
             if query:
                 parser = Query(query)
                 search_term = parser.parse()
+                if not search_term:
+                    answer = format_answer(search_term=False)
+                    return jsonify(query=query, answer=answer)
                 gmaps = GMapsAPI()
                 response = gmaps.place(search_term)["candidates"][0]
                 place = Place(response)

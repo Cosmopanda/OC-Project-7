@@ -27,6 +27,8 @@ class Query:
                 question = [sentence]
                 break
 
+        if not question:
+            return
         # Removing non alpha-numeric characters
         question = re.sub(r"[\_\-\'\"]", " ", question[0][:-1])
 
