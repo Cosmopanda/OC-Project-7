@@ -6,6 +6,7 @@ import json
 import nltk
 from flask_cors import CORS
 from flask import Flask, render_template, jsonify, request
+from bs4 import BeautifulSoup
 
 from constants import MESSAGES
 from apps.query.forms import QueryForm
@@ -26,7 +27,8 @@ GMAPS_KEY = os.environ["GMAPS_KEY"]
 
 def format_answer(place=None, page=None, search_term=True):
     answer = {}
-
+    soup = BeautifulSoup(page.extract, "html.parser")
+    page.extract = soup.get_text().strip("\n")
     if not search_term:
         answer["error"] = MESSAGES["no_question"]
         return answer
@@ -41,9 +43,7 @@ def format_answer(place=None, page=None, search_term=True):
             answer["error"] = MESSAGES["no_wiki_result"]
         else:
             answer["random"] = MESSAGES["random"][0]
-            answer[
-                "wiki"
-            ] = f"{page.extract[33:].replace('<p>', '').replace('</p>', '') }<br/>"
+            answer["wiki"] = f"{page.extract}<br/>"
             answer[
                 "link"
             ] = "Tu peux trouver plus d'informations ici <a href='{page.url}'>Wikipedia</a>"
