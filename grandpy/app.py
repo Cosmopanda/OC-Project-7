@@ -27,8 +27,6 @@ GMAPS_KEY = os.environ["GMAPS_KEY"]
 
 def format_answer(place=None, page=None, search_term=True):
     answer = {}
-    soup = BeautifulSoup(page.extract, "html.parser")
-    page.extract = soup.get_text().strip("\n")
     if not search_term:
         answer["error"] = MESSAGES["no_question"]
         return answer
@@ -42,6 +40,8 @@ def format_answer(place=None, page=None, search_term=True):
         if not page:
             answer["error"] = MESSAGES["no_wiki_result"]
         else:
+            soup = BeautifulSoup(page.extract, "html.parser")
+            page.extract = soup.get_text().strip("\n")
             answer["random"] = MESSAGES["random"][0]
             answer["wiki"] = f"{page.extract}<br/>"
             answer[
